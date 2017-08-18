@@ -175,8 +175,7 @@ public class CalendarView extends ConstraintLayout
         currMonth = currentDate.get(Calendar.MONTH);
         currYear=currentDate.get(Calendar.YEAR);
 
-        Log.e(LOGTAG, "currMonth: "+currentDate.get(Calendar.MONTH) );
-        Log.e(LOGTAG, "curryear: "+currentDate.get(Calendar.YEAR) );
+
 
         // determine the cell for current month's beginning
         calendar.set(Calendar.DAY_OF_MONTH, 1);
@@ -200,12 +199,12 @@ public class CalendarView extends ConstraintLayout
         SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
         txtDate.setText(sdf.format(currentDate.getTime()));
 
-        Log.e(LOGTAG,sdf.format(currentDate.getTime()));
+
 
         // set header color according to current season
         int month = currentDate.get(Calendar.MONTH);
 
-        Log.e(LOGTAG,""+Calendar.MONTH);
+
 
         //header.setBackgroundColor(getResources().getColor(color));
     }
@@ -233,10 +232,10 @@ public class CalendarView extends ConstraintLayout
 
             Calendar calendar = Calendar.getInstance();
 
-            Log.e(LOGTAG,"Calendar pos"+ getItem(position));
+           // Log.e(LOGTAG,"event"+eventDays);
             Date date = getItem(position);
             calendar.setTime(date);
-            Log.e(LOGTAG,"date pos"+ date);
+
             int day = calendar.get(Calendar.DAY_OF_MONTH);
             int month = calendar.get(Calendar.MONTH);
             int year = calendar.get(Calendar.YEAR);
@@ -249,17 +248,22 @@ public class CalendarView extends ConstraintLayout
                 view = inflater.inflate(R.layout.control_calendar_day, parent, false);
 
             // if this day has an event, specify event image
-            view.setBackgroundResource(0);
+            view.setBackgroundResource(eventDays.contains(date) ? R.color.today : 0);
+
             if (eventDays != null)
             {
                 for (Date eventDate : eventDays)
                 {
+                   /* Log.e(LOGTAG,"date"+day);
+                    Log.e(LOGTAG,"month"+month);
+                    Log.e(LOGTAG,"year"+year);*/
                     if (eventDate.getDate() == day &&
                             eventDate.getMonth() == month &&
-                            eventDate.getYear() == year)
+                            eventDate.getYear() == date.getYear())
                     {
                         // mark this day for event
-                        //view.setBackgroundResource(R.drawable.reminder);
+
+                        view.setBackgroundColor(getResources().getColor(R.color.today));
                         break;
                     }
                 }
@@ -269,7 +273,7 @@ public class CalendarView extends ConstraintLayout
             ((TextView)view).setTypeface(null, Typeface.NORMAL);
             ((TextView)view).setTextColor(Color.BLACK);
 
-            Log.e(LOGTAG,"year"+today.getYear());
+
             if (month != currentDate.get(Calendar.MONTH) || year != currentDate.get(Calendar.YEAR))
             {
                 // if this day is outside current month, grey it out
