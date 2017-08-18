@@ -42,6 +42,9 @@ public class CalendarView extends ConstraintLayout
     // default date format
     private static final String DATE_FORMAT = "MMM yyyy";
 
+    private int currMonth;
+    private int currYear;
+
 
 
     // current displayed month
@@ -179,6 +182,11 @@ public class CalendarView extends ConstraintLayout
     {
         ArrayList<Date> cells = new ArrayList<>();
         Calendar calendar = (Calendar)currentDate.clone();
+        currMonth = Calendar.MONTH;
+        currYear=Calendar.YEAR;
+
+        Log.e(LOGTAG, "currMonth: "+currMonth );
+        Log.e(LOGTAG, "curryear: "+currYear );
 
         // determine the cell for current month's beginning
         calendar.set(Calendar.DAY_OF_MONTH, 1);
@@ -205,6 +213,8 @@ public class CalendarView extends ConstraintLayout
 
         // set header color according to current season
         int month = currentDate.get(Calendar.MONTH);
+
+        Log.e(LOGTAG,""+Calendar.MONTH);
         int season = monthSeason[month];
         int color = rainbow[season];
 
@@ -264,7 +274,7 @@ public class CalendarView extends ConstraintLayout
             ((TextView)view).setTypeface(null, Typeface.NORMAL);
             ((TextView)view).setTextColor(Color.BLACK);
 
-            if (month != today.getMonth() || year != today.getYear())
+            if (month != Calendar.MONTH || year != Calendar.YEAR)
             {
                 // if this day is outside current month, grey it out
                 ((TextView)view).setTextColor(getResources().getColor(R.color.greyed_out));

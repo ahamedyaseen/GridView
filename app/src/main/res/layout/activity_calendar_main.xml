@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.ahamedyaseen.customcalendar.CalendarMainActivity"
+    tools:context="customcalendar.ahamedyaseen.example.com.gridview.CalendarMainActivity"
     android:id="@+id/calview"
     tools:layout_editor_absoluteY="81dp"
     tools:layout_editor_absoluteX="0dp">
 
 
-    <com.example.ahamedyaseen.customcalendar.CalendarView
-        xmlns:calendarNS="http://schemas.android.com/apk/res/com.example.ahamedyaseen.customcalendar"
+    <customcalendar.ahamedyaseen.example.com.gridview.CalendarView
+        xmlns:calendarNS="http://schemas.android.com/apk/res/customcalendar.ahamedyaseen.example.com.gridview"
         android:id="@+id/calendar_view1"
         android:layout_width="358dp"
         android:layout_height="482dp"
