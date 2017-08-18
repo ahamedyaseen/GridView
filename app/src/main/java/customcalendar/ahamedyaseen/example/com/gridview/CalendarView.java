@@ -64,16 +64,6 @@ public class CalendarView extends ConstraintLayout
     private float x1,x2;
     static final int MIN_DISTANCE = 150;
 
-    // seasons' rainbow
-    int[] rainbow = new int[] {
-            R.color.summer,
-            R.color.fall,
-            R.color.winter,
-            R.color.spring
-    };
-
-    // month-season association (northern hemisphere, sorry australia :)
-    int[] monthSeason = new int[] {2, 2, 3, 3, 3, 0, 0, 0, 1, 1, 1, 2};
 
     public CalendarView(Context context)
     {
@@ -182,11 +172,11 @@ public class CalendarView extends ConstraintLayout
     {
         ArrayList<Date> cells = new ArrayList<>();
         Calendar calendar = (Calendar)currentDate.clone();
-        currMonth = Calendar.MONTH;
-        currYear=Calendar.YEAR;
+        currMonth = currentDate.get(Calendar.MONTH);
+        currYear=currentDate.get(Calendar.YEAR);
 
-        Log.e(LOGTAG, "currMonth: "+currMonth );
-        Log.e(LOGTAG, "curryear: "+currYear );
+        Log.e(LOGTAG, "currMonth: "+currentDate.get(Calendar.MONTH) );
+        Log.e(LOGTAG, "curryear: "+currentDate.get(Calendar.YEAR) );
 
         // determine the cell for current month's beginning
         calendar.set(Calendar.DAY_OF_MONTH, 1);
@@ -200,6 +190,7 @@ public class CalendarView extends ConstraintLayout
         {
             cells.add(calendar.getTime());
             calendar.add(Calendar.DAY_OF_MONTH, 1);
+
         }
 
         // update grid
@@ -215,8 +206,6 @@ public class CalendarView extends ConstraintLayout
         int month = currentDate.get(Calendar.MONTH);
 
         Log.e(LOGTAG,""+Calendar.MONTH);
-        int season = monthSeason[month];
-        int color = rainbow[season];
 
         //header.setBackgroundColor(getResources().getColor(color));
     }
@@ -241,10 +230,16 @@ public class CalendarView extends ConstraintLayout
         public View getView(int position, View view, ViewGroup parent)
         {
             // day in question
+
+            Calendar calendar = Calendar.getInstance();
+
+            Log.e(LOGTAG,"Calendar pos"+ getItem(position));
             Date date = getItem(position);
-            int day = date.getDate();
-            int month = date.getMonth();
-            int year = date.getYear();
+            calendar.setTime(date);
+            Log.e(LOGTAG,"date pos"+ date);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+            int month = calendar.get(Calendar.MONTH);
+            int year = calendar.get(Calendar.YEAR);
 
             // today
             Date today = new Date();
@@ -274,7 +269,8 @@ public class CalendarView extends ConstraintLayout
             ((TextView)view).setTypeface(null, Typeface.NORMAL);
             ((TextView)view).setTextColor(Color.BLACK);
 
-            if (month != Calendar.MONTH || year != Calendar.YEAR)
+            Log.e(LOGTAG,"year"+today.getYear());
+            if (month != currentDate.get(Calendar.MONTH) || year != currentDate.get(Calendar.YEAR))
             {
                 // if this day is outside current month, grey it out
                 ((TextView)view).setTextColor(getResources().getColor(R.color.greyed_out));
